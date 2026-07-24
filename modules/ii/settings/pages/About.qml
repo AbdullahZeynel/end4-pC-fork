@@ -26,7 +26,7 @@ ContentPage {
         Quickshell.execDetached([
             "kitty", "--hold",
             "bash", "-c",
-            "killall qs; sleep 0.5; cd ~/.config/quickshell/ && rm -rf end4-pC && git clone https://github.com/pctrade/end4-pC.git && nohup qs -c end4-pC > /tmp/qs.log 2>&1 &"
+            "killall qs; sleep 0.5; cd ~/.config/quickshell/end4-pC-fork && git pull --ff-only; nohup qs -c end4-pC-fork > /tmp/qs.log 2>&1 &"
         ])
         Qt.callLater(() => GlobalStates.settingsOpen = false)
     }
