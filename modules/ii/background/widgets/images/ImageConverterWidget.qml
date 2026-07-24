@@ -143,7 +143,7 @@ AbstractBackgroundWidget {
 
     Rectangle {
         id: contentItem
-        color: Appearance.colors.colPrimaryContainer
+        color: Appearance.colors.colWidgetPanel
         radius: Appearance.rounding?.verylarge ?? 30
         implicitWidth: 276
         implicitHeight: 252

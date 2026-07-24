@@ -122,6 +122,19 @@ Singleton {
                     property real backgroundTransparency: 0.11
                     property real contentTransparency: 0.57
                 }
+                // Frosted-glass look for desktop widgets: the wallpaper behind each
+                // widget is sampled, blurred and tinted, with a glowing neon edge.
+                property JsonObject glass: JsonObject {
+                    property bool enable: false
+                    property real panelTransparency: 0.55 // 0 = opaque panel, 1 = fully see-through
+                    property real blurRadius: 64
+                    property real tintOpacity: 0.15
+                    property bool neonEnable: true
+                    property real neonWidth: 1.5
+                    property real neonGlow: 20 // 0 disables the glow pass
+                    property real neonOpacity: 0.9
+                    property real neonLightness: 0.72 // higher = more electric
+                }
                 property JsonObject wallpaperTheming: JsonObject {
                     property bool enableAppsAndShell: true
                     property bool enableQtApps: true

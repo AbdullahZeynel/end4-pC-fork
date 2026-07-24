@@ -64,7 +64,7 @@ AbstractBackgroundWidget {
         Rectangle {
             id: contentRect
             anchors.fill: parent
-            color:  Appearance.colors.colPrimaryContainer
+            color:  Appearance.colors.colWidgetPanel
             radius: Appearance.rounding?.verylarge ?? 30
 
             // 2x2

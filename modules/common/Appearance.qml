@@ -153,6 +153,15 @@ Singleton {
         property color colPrimaryContainerHover: ColorUtils.mix(colors.colPrimaryContainer, colors.colOnPrimaryContainer, 0.9)
         property color colPrimaryContainerActive: ColorUtils.mix(colors.colPrimaryContainer, colors.colOnPrimaryContainer, 0.8)
         property color colOnPrimaryContainer: m3colors.m3onPrimaryContainer
+        // Glass / neon. Desktop widgets use these for their panel fill so that
+        // enabling appearance.glass makes them see-through without touching any
+        // other surface in the shell. See Config.options.appearance.glass.
+        readonly property bool glassOn: Config?.options.appearance.glass.enable ?? false
+        property color colWidgetPanel: colors.glassOn
+            ? ColorUtils.transparentize(m3colors.m3primaryContainer, Config.options.appearance.glass.panelTransparency)
+            : m3colors.m3primaryContainer
+        property color colNeon: ColorUtils.colorWithLightness(m3colors.m3primary,
+            Config?.options.appearance.glass.neonLightness ?? 0.72)
         // Secondary
         property color colSecondary: m3colors.m3secondary
         property color colSecondaryHover: ColorUtils.mix(m3colors.m3secondary, colLayer1Hover, 0.85)

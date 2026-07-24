@@ -32,6 +32,23 @@ AbstractWidget {
         animation: Appearance.animation.elementResize.numberAnimation.createObject(this)
     }
 
+    // Frosted-glass backdrop, shared by every desktop widget. Sits behind the
+    // widget's own content, which turns see-through via Appearance.colors
+    // .colWidgetPanel when glass is enabled.
+    Loader {
+        anchors.fill: parent
+        z: -1
+        active: Config.options.appearance.glass.enable
+
+        sourceComponent: GlassBackground {
+            wallpaperPath: root.wallpaperPath
+            screenW: root.scaledScreenWidth
+            screenH: root.scaledScreenHeight
+            widgetX: root.x
+            widgetY: root.y
+        }
+    }
+
     draggable: placementStrategy === "free" && !Config.options.background.widgetsLocked
     onReleased: {
         configEntry.x = root.x;

@@ -29,7 +29,7 @@ AbstractBackgroundWidget {
         property string value: ""
         property string label: ""
         property int shape: MaterialShape.Shape.Cookie12Sided
-        property color bgColor: Appearance.colors.colPrimaryContainer
+        property color bgColor: Appearance.colors.colWidgetPanel
         property color shapeColor: Appearance.colors.colPrimary
 
         implicitWidth: root.cardWidth
