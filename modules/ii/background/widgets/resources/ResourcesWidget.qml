@@ -101,7 +101,7 @@ AbstractBackgroundWidget {
             value: Math.round(ResourceUsage.memoryUsedPercentage * 100) + "%"
             label: "RAM"
             shape: MaterialShape.Shape.Cookie4Sided
-            bgColor: Appearance.colors.colSecondaryContainer
+            bgColor: Appearance.colors.glassify(Appearance.colors.colSecondaryContainer)
             shapeColor: Appearance.colors.colSecondary
         }
         StatCard {
@@ -111,7 +111,7 @@ AbstractBackgroundWidget {
                 : Math.round(ResourceUsage.diskUsedPercentage * 100) + "%"
             label: root.hasBattery ? "Battery" : "Disk"
             shape: MaterialShape.Shape.Cookie12Sided
-            bgColor: Appearance.colors.colTertiaryContainer
+            bgColor: Appearance.colors.glassify(Appearance.colors.colTertiaryContainer)
             shapeColor: Appearance.colors.colTertiary
         }
     }
@@ -137,7 +137,7 @@ AbstractBackgroundWidget {
             anchors.centerIn: parent
             text: "rotate_right"
             iconSize: 11
-            color: Appearance.colors.colPrimaryContainer
+            color: Appearance.colors.colWidgetPanel
 
             RotationAnimation on rotation {
                 running: toggleArea.containsMouse
