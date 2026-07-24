@@ -24,6 +24,7 @@ import qs.modules.ii.background.widgets.visualizer
 import qs.modules.ii.background.widgets.calendar
 import qs.modules.ii.background.widgets.worldclock
 import qs.modules.ii.background.widgets.usercard
+import qs.modules.ii.background.widgets.city
 
 Variants {
     id: root
