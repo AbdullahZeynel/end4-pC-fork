@@ -12,6 +12,7 @@ AbstractBackgroundWidget {
     id: root
 
     configEntryName: "clock"
+    useGlass: false // no panel of its own - glass would show as a bare slab
 
     implicitHeight: contentColumn.implicitHeight
     implicitWidth: contentColumn.implicitWidth

@@ -11,6 +11,7 @@ AbstractBackgroundWidget {
     id: root
 
     configEntryName: "visualizer"
+    useGlass: false // no panel of its own - glass would show as a bare slab
 
     readonly property MprisPlayer activePlayer: MprisController.activePlayer
     readonly property bool isPlaying: activePlayer?.isPlaying ?? false
