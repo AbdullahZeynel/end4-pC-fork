@@ -52,7 +52,7 @@ AbstractBackgroundWidget {
         implicitWidth: root.widgetWidth
         implicitHeight: root.cardHeight
         radius: Appearance.rounding?.verylarge ?? 30
-        color: Appearance.colors.colPrimaryContainer
+        color: Appearance.colors.colWidgetPanel
 
         StyledRectangularShadow {
             target: card

@@ -90,7 +90,7 @@ AbstractBackgroundWidget {
         implicitWidth: root.widgetWidth
         implicitHeight: root.widgetHeight + (root.showLyrics ? 264 : 0)
         radius: Appearance.rounding?.verylarge ?? 30
-        color: Appearance.colors.colPrimaryContainer
+        color: Appearance.colors.colWidgetPanel
         clip: true
 
         Behavior on implicitHeight {

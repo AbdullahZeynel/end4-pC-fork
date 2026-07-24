@@ -32,6 +32,27 @@ AbstractWidget {
         animation: Appearance.animation.elementResize.numberAnimation.createObject(this)
     }
 
+    // Frosted-glass backdrop, shared by every desktop widget. Sits behind the
+    // widget's own content, which turns see-through via Appearance.colors
+    // .colWidgetPanel when glass is enabled.
+    // Widgets that draw no panel of their own (clock, visualizer) opt out:
+    // a glass slab behind bare hands or bars reads as a stray rectangle.
+    property bool useGlass: true
+
+    Loader {
+        anchors.fill: parent
+        z: -1
+        active: root.useGlass && Config.options.appearance.glass.enable
+
+        sourceComponent: GlassBackground {
+            wallpaperPath: root.wallpaperPath
+            screenW: root.scaledScreenWidth
+            screenH: root.scaledScreenHeight
+            widgetX: root.x
+            widgetY: root.y
+        }
+    }
+
     draggable: placementStrategy === "free" && !Config.options.background.widgetsLocked
     onReleased: {
         configEntry.x = root.x;
