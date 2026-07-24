@@ -157,6 +157,12 @@ Singleton {
         // enabling appearance.glass makes them see-through without touching any
         // other surface in the shell. See Config.options.appearance.glass.
         readonly property bool glassOn: Config?.options.appearance.glass.enable ?? false
+        // Makes any surface colour glass-aware. Inner cards inside a widget must use this
+        // too, otherwise they stay opaque and hide the frosted panel behind them.
+        function glassify(c) {
+            if (!colors.glassOn) return c;
+            return ColorUtils.transparentize(c, Config.options.appearance.glass.panelTransparency);
+        }
         property color colWidgetPanel: colors.glassOn
             ? ColorUtils.transparentize(m3colors.m3primaryContainer, Config.options.appearance.glass.panelTransparency)
             : m3colors.m3primaryContainer

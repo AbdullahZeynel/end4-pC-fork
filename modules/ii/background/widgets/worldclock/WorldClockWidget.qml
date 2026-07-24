@@ -97,7 +97,7 @@ AbstractBackgroundWidget {
                     Item { Layout.fillWidth: true }
                     Rectangle {
                         radius: Appearance.rounding.full
-                        color: Appearance.colors.colSurfaceContainerLow
+                        color: Appearance.colors.glassify(Appearance.colors.colSurfaceContainerLow)
                         implicitWidth: 28; implicitHeight: 28
                         MaterialSymbol {
                             anchors.centerIn: parent
@@ -147,8 +147,8 @@ AbstractBackgroundWidget {
                             Layout.preferredWidth: 120; Layout.preferredHeight: 54
                             radius: Appearance.rounding.normal
                             color: modelData.isDay
-                                ? Appearance.colors.colPrimary
-                                : Appearance.colors.colSurfaceContainerLow
+                                ? Appearance.colors.glassify(Appearance.colors.colPrimary)
+                                : Appearance.colors.glassify(Appearance.colors.colSurfaceContainerLow)
                             property color fg: modelData.isDay
                                 ? Appearance.colors.colOnPrimary
                                 : Appearance.colors.colOnLayer0
