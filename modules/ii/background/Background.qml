@@ -25,6 +25,7 @@ import qs.modules.ii.background.widgets.calendar
 import qs.modules.ii.background.widgets.worldclock
 import qs.modules.ii.background.widgets.usercard
 import qs.modules.ii.background.widgets.city
+import qs.modules.ii.background.widgets.ytdlp
 
 Variants {
     id: root
@@ -550,6 +551,18 @@ Variants {
                                 mediaTimer.running = true
                             })
                         }
+                    }
+                }
+                FadeLoader {
+                    shown: Config.options.background.widgets.ytdlp.enable
+                        && (Config.options.background.screenList.length === 0
+                            || Config.options.background.screenList.includes(bgRoot.screen.name))
+                    sourceComponent: YtDlpWidget {
+                        screenWidth:        bgRoot.screen.width
+                        screenHeight:       bgRoot.screen.height
+                        scaledScreenWidth:  bgRoot.screen.width
+                        scaledScreenHeight: bgRoot.screen.height
+                        wallpaperScale:     1
                     }
                 }
                 FadeLoader {

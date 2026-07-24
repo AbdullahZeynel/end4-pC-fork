@@ -22,6 +22,7 @@ Item {
         { key: "calendar",    icon: "calendar_month",     name: Translation.tr("Calendar") },
         { key: "worldClock",  icon: "public",             name: Translation.tr("World Clock") },
         { key: "city",        icon: "location_city",      name: Translation.tr("City") },
+        { key: "ytdlp",       icon: "download",           name: Translation.tr("Downloader") },
         { key: "userCard",    icon: "person",              name: Translation.tr("User Card") },
     ]
 

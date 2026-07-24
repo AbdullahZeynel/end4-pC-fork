@@ -61,6 +61,15 @@ The authoritative record is always the git history: `git diff main..mine`.
   so **no image is ever committed** and no image licensing rides along with the fork.
   Defaults to Ankara / `Europe/Istanbul`, both configurable.
 
+### Downloader (yt-dlp) widget
+
+- **`modules/ii/background/widgets/ytdlp/YtDlpWidget.qml`** (new) — paste a URL, the title is
+  fetched via `yt-dlp --print` and pre-filled but stays editable (typing in the name field
+  stops it being overwritten), choose a container, download. Audio formats go through
+  `-x --audio-format`, video through `-f "bv*+ba/b" --merge-output-format`. Output directory
+  configurable, defaults to `~/Downloads`. Registered in `Config.qml`, `Background.qml`
+  (module import included) and `WidgetsSubmenu.qml`.
+
 ---
 
 ## Upstream bugs spotted (not yet reported)
@@ -74,9 +83,6 @@ The authoritative record is always the git history: `git diff main..mine`.
 
 ## Planned
 
-- [ ] **yt-dlp widget** — a background widget in the style of the existing Image Converter:
-      paste a URL, auto-filled but editable output name, pick a container/format
-      (`mp3` / `ogg` / `mp4` / …), download. Intended as an upstream PR.
 - [ ] **Neon / liquid-glass widget styling** — heavy translucency plus glowing edges,
       built on the existing `appearance.transparency` system and the `FastBlur` +
       `OpacityMask` pattern already used by `UserCardWidget`. Opt-in, default off,

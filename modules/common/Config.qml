@@ -299,6 +299,14 @@ Singleton {
                         property string sizeMode: "2x2" 
                     }
 
+                    property JsonObject ytdlp: JsonObject {
+                        property bool enable: false
+                        property string placementStrategy: "free"
+                        property real x: 400
+                        property real y: 100
+                        property string downloadDir: "" // empty = ~/Downloads
+                    }
+
                     property JsonObject city: JsonObject {
                         property bool enable: false
                         property string placementStrategy: "free"
