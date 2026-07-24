@@ -9,7 +9,9 @@ Item {
     id: root
     property var tabButtonList: [
         {"name": Translation.tr("Pomodoro"), "icon": "search_activity"},
-        {"name": Translation.tr("Stopwatch"), "icon": "timer"}
+        {"name": Translation.tr("Stopwatch"), "icon": "timer"},
+        {"name": Translation.tr("Alarms"), "icon": "alarm"},
+        {"name": Translation.tr("Timers"), "icon": "hourglass"}
     ]
 
     // These are keybinds for stopwatch and pomodoro
@@ -21,6 +23,12 @@ Item {
                 tabBar.decrementCurrentIndex();
             }
             event.accepted = true
+        } else if (event.key === Qt.Key_Escape && AlarmService.ringing.length > 0) { // Silence whatever is going off
+            AlarmService.dismissAll()
+            event.accepted = true
+        } else if (tabBar.currentIndex > 1) {
+            // Alarms and Timers tabs have text fields; leave keys to them.
+            return
         } else if (event.key === Qt.Key_Space || event.key === Qt.Key_S) { // Pause/resume with Space or S
             if (tabBar.currentIndex === 0) {
                 TimerService.togglePomodoro()
@@ -70,6 +78,8 @@ Item {
             // Tabs
             PomodoroTimer {}
             Stopwatch {}
+            Alarms {}
+            Timers {}
         }
     }
 }

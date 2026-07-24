@@ -70,6 +70,47 @@ The authoritative record is always the git history: `git diff main..mine`.
   configurable, defaults to `~/Downloads`. Registered in `Config.qml`, `Background.qml`
   (module import included) and `WidgetsSubmenu.qml`.
 
+### Alarms and countdown timers
+
+- **`services/AlarmService.qml`** (new) — alarms and countdown timers. Deliberately separate
+  from upstream's `TimerService.qml`, which already covers pomodoro and stopwatch: those measure
+  an interval you are watching, these fire at a wall-clock moment you may not be.
+- **`shell.qml`** — calls `AlarmService.load()` at startup. QML singletons are only created on
+  first use, so without this the service would only tick while something happened to be looking
+  at it, and an alarm would not fire with every panel closed. Same `function load() {}` idiom
+  upstream already uses for `Wallpapers` and `Updates`.
+- **State** lives in its own `alarms.json` (`Directories.alarmsPath`) rather than
+  `Persistent.qml`'s `states.json`, following the `Todo.qml` pattern — a list of objects
+  round-trips safely through a plain `FileView`, and these are user data, not shell state.
+- **Catch-up on restart** — due times are stored absolute, so one code path handles the shell
+  having been closed, the machine asleep, or a normal tick. Anything that came due more than
+  `missedGraceMinutes` ago is marked *missed* and rescheduled rather than ringing hours late.
+- **`IpcHandler`** with `silence`, `snoozeAll` and `status`, so a ringing alarm can always be
+  stopped from a terminal or a keybind and never only from the sidebar:
+  `qs -c end4-pC-fork ipc call alarms silence`. Worth binding to a key.
+- **`Config.qml`** — new `time.alarms` block (`snoozeMinutes`, `missedGraceMinutes`,
+  `ringTimeoutSeconds`, `soundRepeatSeconds`, `sound`) and `sounds.alarm`.
+- **UI** — `Alarms.qml` and `Timers.qml` added as two more tabs in the existing
+  `sidebarRight/pomodoro/` module, so Pomodoro / Stopwatch / Alarms / Timers now share one
+  tab bar. Ringing shows an in-tab banner with Snooze and Dismiss; Escape silences.
+
+---
+
+## Gotchas learned the hard way
+
+- **Never check out a `main`-based branch while `qs` is running.**
+  `~/.config/quickshell/end4-pC-fork` is a symlink to this repo, so the checked-out branch is
+  what the shell loads. Checking out a `feat/*` branch off `main` makes quickshell hot-reload
+  upstream's `Config.qml`, whose JsonAdapter then **rewrites
+  `~/.config/illogical-impulse/config.json` with every key it doesn't recognise deleted** — this
+  wiped the whole `appearance.glass` block, disabled two widgets and repositioned the rest.
+  Git history is untouched, which makes it look like lost code when it isn't.
+  Build on `mine` and cherry-pick onto a clean `feat/*` branch at the end instead.
+- **A key missing from `config.json` does not mean the feature is broken.** quickshell only
+  writes the file when a value changes, so a newly added `Config.qml` block simply never appears
+  until something touches it — the defaults are held in memory. `city` and `ytdlp` were absent
+  from the file for this reason. To enable one: `killall qs`, add the block with `jq`, restart.
+
 ---
 
 ## Upstream bugs spotted (not yet reported)
@@ -83,8 +124,30 @@ The authoritative record is always the git history: `git diff main..mine`.
 
 ## Planned
 
-- [ ] **Neon / liquid-glass widget styling** — heavy translucency plus glowing edges,
-      built on the existing `appearance.transparency` system and the `FastBlur` +
-      `OpacityMask` pattern already used by `UserCardWidget`. Opt-in, default off,
-      so it changes nothing unless deliberately enabled.
-- [ ] **yt-dlp widget** — still to do.
+In rough priority order. Deliberately kept as a queue rather than worked in parallel —
+the clock service alone was a session's worth of work.
+
+- [ ] **Clock face redesign** — make it cooler. Check `Config.options.background.widgets.clock`
+      first: there are existing `style`, `cookie.*` and `digital.*` options, so some of this
+      may be configuration rather than new code.
+- [ ] **Calendar: tasks on days** — the To Do service and per-day calendar cells already exist.
+      Needs todo items to carry an optional date, markers on days that have one, and a
+      click-through from a day to its tasks. Data model change first, UI second.
+- [ ] **Smart widget auto-placement** — the existing `placementStrategy: "leastBusy"` positions
+      each widget independently with no knowledge of the others, so they overlap. Wanted: a
+      collision-aware pass on wallpaper change that aligns widgets to a shared grid with
+      consistent gutters, writes the result into each widget's stored x/y, and hands control
+      back so they stay draggable. `AbstractWidget` already has `gridSize: 12`, `snapEnabled`,
+      `snap()`, and the canvas draws alignment guides — build on those.
+- [ ] **Click-to-pin the bar popup** — it opens on hover and vanishes on hover-out; a click
+      should pin it so it can be interacted with.
+- [ ] **Redesign the Downloader widget** (`widgets/ytdlp/YtDlpWidget.qml`) — it works but reads
+      as a plain stack of form fields.
+
+### Also outstanding
+
+- [ ] Push `feat/image-converter-file-picker` and open a PR against `pctrade/end4-pC` — clean
+      single-feature diff, ready to go.
+- [ ] Report the `filterDuplicatePlayers()` upstream bug recorded above.
+- [ ] Consider splitting the alarms/timers work onto a `feat/alarms-timers` branch for an
+      upstream PR — it touches only one upstream file meaningfully (`PomodoroWidget.qml`).

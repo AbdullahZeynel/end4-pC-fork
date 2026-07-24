@@ -42,6 +42,7 @@ ShellRoot {
         Cliphist.refresh()
         Wallpapers.load()
         Updates.load()
+        AlarmService.load() // Must exist from startup so alarms fire with no panel open
         LyricsService.restartLyrics()
     }
 

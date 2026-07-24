@@ -754,6 +754,7 @@ Singleton {
             property JsonObject sounds: JsonObject {
                 property bool battery: false
                 property bool pomodoro: false
+                property bool alarm: true
                 property string theme: "freedesktop"
             }
 
@@ -768,6 +769,18 @@ Singleton {
                     property int cyclesBeforeLongBreak: 4
                     property int focus: 1500
                     property int longBreak: 900
+                }
+                property JsonObject alarms: JsonObject {
+                    property int snoozeMinutes: 5
+                    // An alarm that came due while the shell was down only rings if it
+                    // is less late than this; otherwise it's marked missed and skipped.
+                    property int missedGraceMinutes: 5
+                    // Give up ringing after this long with nobody dismissing it. 0 = never.
+                    // Kept short deliberately: an alarm nobody is there to dismiss should
+                    // stop nagging on its own rather than repeat for minutes.
+                    property int ringTimeoutSeconds: 60
+                    property int soundRepeatSeconds: 5
+                    property string sound: "alarm-clock-elapsed"
                 }
                 property bool secondPrecision: false
             }
