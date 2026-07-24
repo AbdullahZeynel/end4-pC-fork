@@ -163,6 +163,13 @@ Singleton {
             if (!colors.glassOn) return c;
             return ColorUtils.transparentize(c, Config.options.appearance.glass.panelTransparency);
         }
+        // For cards sitting ON a glass panel. Their alpha multiplies with the panel's, so
+        // using glassify() here makes a widget read as markedly more solid than a
+        // single-panel widget like the calendar. Hence a separate, stronger value.
+        function glassifyInner(c) {
+            if (!colors.glassOn) return c;
+            return ColorUtils.transparentize(c, Config.options.appearance.glass.innerTransparency);
+        }
         property color colWidgetPanel: colors.glassOn
             ? ColorUtils.transparentize(m3colors.m3primaryContainer, Config.options.appearance.glass.panelTransparency)
             : m3colors.m3primaryContainer
