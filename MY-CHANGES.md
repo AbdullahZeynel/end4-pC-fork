@@ -52,6 +52,15 @@ The authoritative record is always the git history: `git diff main..mine`.
   converter, media, resources, weather, world clock.
   *(Upstream PR candidate — branch `feat/glass-widget-style`.)*
 
+### City widget
+
+- **`modules/ii/background/widgets/city/CityWidget.qml`** (new) — one city's local time,
+  current weather and a photo of it, in place of running the four-timezone World Clock and
+  the Weather widget side by side. Registered in `Config.qml`, `Background.qml` and
+  `WidgetsSubmenu.qml`. `imagePath` defaults to empty and the photo is referenced by path,
+  so **no image is ever committed** and no image licensing rides along with the fork.
+  Defaults to Ankara / `Europe/Istanbul`, both configurable.
+
 ---
 
 ## Upstream bugs spotted (not yet reported)
@@ -72,6 +81,4 @@ The authoritative record is always the git history: `git diff main..mine`.
       built on the existing `appearance.transparency` system and the `FastBlur` +
       `OpacityMask` pattern already used by `UserCardWidget`. Opt-in, default off,
       so it changes nothing unless deliberately enabled.
-- [ ] **City widget** — one city's time and weather merged into a single widget with a
-      photo background, replacing the four-timezone World Clock and the separate Weather
-      widget. Image path configurable; no image bundled in the repo.
+- [ ] **yt-dlp widget** — still to do.

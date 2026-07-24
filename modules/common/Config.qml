@@ -299,6 +299,17 @@ Singleton {
                         property string sizeMode: "2x2" 
                     }
 
+                    property JsonObject city: JsonObject {
+                        property bool enable: false
+                        property string placementStrategy: "free"
+                        property real x: 400
+                        property real y: 100
+                        property string cityLabel: "Ankara"
+                        property string timezone: "Europe/Istanbul"
+                        property string imagePath: "" // set to a local photo; never bundled
+                        property real imageOpacity: 0.55
+                    }
+
                     property JsonObject userCard: JsonObject {
                         property bool enable: false
                         property string placementStrategy: "free"

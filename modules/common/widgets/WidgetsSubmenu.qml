@@ -21,6 +21,7 @@ Item {
         { key: "resources",   icon: "monitor_heart",      name: Translation.tr("Resources") },
         { key: "calendar",    icon: "calendar_month",     name: Translation.tr("Calendar") },
         { key: "worldClock",  icon: "public",             name: Translation.tr("World Clock") },
+        { key: "city",        icon: "location_city",      name: Translation.tr("City") },
         { key: "userCard",    icon: "person",              name: Translation.tr("User Card") },
     ]
 
