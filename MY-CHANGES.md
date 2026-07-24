@@ -35,6 +35,32 @@ The authoritative record is always the git history: `git diff main..mine`.
   Widget height 252 → 300px to fit the button.
   *(Upstream PR candidate — branch `feat/image-converter-file-picker`.)*
 
+### Frosted glass + neon widget styling
+
+- **`modules/ii/background/widgets/GlassBackground.qml`** (new) — samples the wallpaper
+  region behind a widget, blurs and tints it, and draws a glowing neon edge. The sample is
+  offset by the widget's own x/y, so the blur matches what is actually behind it and tracks
+  while the widget is dragged.
+- **`AbstractBackgroundWidget.qml`** — loads the backdrop behind widget content through a
+  `Loader`, so nothing is built when the feature is off. Widgets that draw no panel of their
+  own (clock, visualizer) opt out via `useGlass: false`.
+- **`Appearance.qml`** — added `colWidgetPanel` and `colNeon`. `colWidgetPanel` is byte-identical
+  to `colPrimaryContainer` unless glass is on, so no other surface in the shell is touched.
+- **`Config.qml`** — new `appearance.glass` block: `enable` (default **false**), `panelTransparency`,
+  `blurRadius`, `tintOpacity`, `neonEnable`, `neonWidth`, `neonGlow`, `neonOpacity`, `neonLightness`.
+- Six widgets swapped their panel fill to `colWidgetPanel` (one line each): calendar, image
+  converter, media, resources, weather, world clock.
+  *(Upstream PR candidate — branch `feat/glass-widget-style`.)*
+
+---
+
+## Upstream bugs spotted (not yet reported)
+
+- `modules/ii/sidebarRight/SidebarRightContent.qml` lines 41/46/47 call
+  `filterDuplicatePlayers()`, which is only defined in `modules/ii/mediaControls/MediaControls.qml`.
+  Spams `ReferenceError: filterDuplicatePlayers is not defined` on every media update.
+  Untouched by this fork — worth an upstream issue or PR.
+
 ---
 
 ## Planned
