@@ -127,6 +127,7 @@ Singleton {
                 property JsonObject glass: JsonObject {
                     property bool enable: false
                     property real panelTransparency: 0.55 // 0 = opaque panel, 1 = fully see-through
+                    property real innerTransparency: 0.82 // cards drawn ON a glass panel; alpha compounds
                     property real blurRadius: 64
                     property real tintOpacity: 0.15
                     property bool neonEnable: true
