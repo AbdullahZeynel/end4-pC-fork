@@ -37,7 +37,26 @@ AbstractBackgroundWidget {
     property var batchPaths: []
 
     implicitWidth:  276
-    implicitHeight: 252
+    implicitHeight: 300
+
+    Process {
+        id: fileChooser
+        command: ["kdialog", "--getopenfilename", Quickshell.env("HOME") + "/Pictures",
+            "image/png image/jpeg image/webp image/avif image/bmp image/gif image/tiff",
+            "--multiple", "--separate-output",
+            "--title", Translation.tr("Choose image(s) to convert")]
+
+        stdout: StdioCollector {
+            id: fileChooserOutput
+        }
+
+        onExited: (exitCode) => {
+            if (exitCode !== 0) return; // cancelled
+            const picked = fileChooserOutput.text.trim().split("\n").filter((line) => line.length > 0);
+            if (picked.length === 0) return;
+            root.enqueueFiles(picked);
+        }
+    }
 
     Process {
         id: converter
@@ -146,7 +165,7 @@ AbstractBackgroundWidget {
         color: Appearance.colors.colPrimaryContainer
         radius: Appearance.rounding?.verylarge ?? 30
         implicitWidth: 276
-        implicitHeight: 252
+        implicitHeight: 300
 
         ColumnLayout {
             id: columnLayout
@@ -314,6 +333,19 @@ AbstractBackgroundWidget {
                     onActivated: (index) => {
                         root.selectedFormat = model[index].value
                     }
+                }
+            }
+
+            RippleButtonWithIcon {
+                Layout.fillWidth: true
+                materialIcon: "folder_open"
+                mainText: Translation.tr("Choose files...")
+                enabled: root.dropStatus !== "converting"
+                colBackground: Appearance.colors.colSurfaceContainerLow
+                colBackgroundHover: Appearance.colors.colLayer1Hover
+                releaseAction: () => {
+                    if (root.dropStatus === "converting") return;
+                    fileChooser.running = true;
                 }
             }
         }
