@@ -1,0 +1,22 @@
+# Quickshell / QML LSP
+.qmlls.ini
+*.qmlc
+*.jsc
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Local scratch — keep experiments out of commits
+/local/
+*.log
+*.bak
+*.orig
+*.rej
