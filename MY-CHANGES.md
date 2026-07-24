@@ -107,9 +107,21 @@ The authoritative record is always the git history: `git diff main..mine`.
   Git history is untouched, which makes it look like lost code when it isn't.
   Build on `mine` and cherry-pick onto a clean `feat/*` branch at the end instead.
 - **A key missing from `config.json` does not mean the feature is broken.** quickshell only
-  writes the file when a value changes, so a newly added `Config.qml` block simply never appears
-  until something touches it — the defaults are held in memory. `city` and `ytdlp` were absent
-  from the file for this reason. To enable one: `killall qs`, add the block with `jq`, restart.
+  writes the file when a value changes, so a newly added `Config.qml` block may not appear in
+  the file at all — the defaults are held in memory. To enable one: `killall qs`, add the block
+  with `jq`, restart.
+- **Don't diagnose config damage from an old backup.** After the incident above, the `city` and
+  `ytdlp` blocks were missing from every surviving backup, which looked like they had never been
+  written. They had — the backups simply predated the session that set them, and the only file
+  written in that window was the one `main` had already stripped. The right check is to diff
+  `main`'s `Config.qml` against `mine`'s to list every fork-specific key, then verify each one:
+  `git diff main:modules/common/Config.qml mine:modules/common/Config.qml`.
+- **Local assets are not in the repo and not in git.** Deliberately, for licensing. If they go
+  missing nothing in the repo will restore them:
+  - `~/Pictures/city/ankara-anitkabir.jpg` — City widget photo (CC BY 4.0, Amin Monfared),
+    with its `LICENSE.txt` alongside. Referenced by `background.widgets.city.imagePath`.
+  - `~/.face` — UserCard avatar, copied from `~/Pictures/Users/godfry.jpg`. Without it the log
+    spams `Cannot open: file:///home/abdullah/.face` and the widget shows no avatar.
 
 ---
 
